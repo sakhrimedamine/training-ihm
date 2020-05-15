@@ -1,0 +1,39 @@
+<div class="card m-3">
+  <h5 class="card-header">New User</h5>
+  <div class="card-body">
+      <form [formGroup]="exerciceForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+              <div class="form-group col">
+                  <label for="muscle">Muscle :</label>
+                  <select class="custom-select" formControlName="muscle" required
+                    [ngClass]="{ 'is-invalid': submitted && f.muscle.errors }">
+                    <option selected value="">Choose a muscle</option>
+                    <option *ngFor="let m of muscles" [value]="m" >{{ m }}</option>
+                  </select>
+                  <div *ngIf="submitted && f.muscle.errors" class="invalid-feedback">
+                      <div *ngIf="f.muscle.errors.required">Muscle is required</div>
+                  </div>
+              </div>
+              <div class="form-group col-6">
+                  <label>Name</label>
+                  <input type="text" formControlName="name" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.name.errors }" minlength="4"/>
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Name is required</div>
+                      <div *ngIf="f.name.errors.minlength">Min length is 4</div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-row">
+              <label for="description">description :</label>
+              <textarea class="form-control" formControlName="description" rows="3"
+                  formControlName="description">
+              </textarea>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary mr-1">Register</button>
+            <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+        </div>
+    </form>
+</div>
+</div>

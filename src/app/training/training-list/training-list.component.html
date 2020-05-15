@@ -1,0 +1,21 @@
+<section class="card">
+    <header>
+      <h1>All trainings</h1>
+    </header>
+    <article class='table-responsive'>
+      <table class='table' *ngIf='training$ | async as trainings'>
+        <thead>
+          <tr>
+              <th>name</th>
+              <th>muscle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let training of trainings'>
+              <td>{{ training.name }}</td>
+              <td>{{ training.muscle }}</td>
+            </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>

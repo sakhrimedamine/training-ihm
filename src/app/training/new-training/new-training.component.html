@@ -1,0 +1,64 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" (submit)="step2()">
+      <ng-template matStepLabel>Fill name and muscle</ng-template>
+      <article class="center">
+        <div class="row">
+          <div class="form-group col-6">
+              <label>Name</label>
+              <input type="text" formControlName="name" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f1.name.errors }" required/>
+              <div *ngIf="f1.name.errors" class="invalid-feedback">
+                  <div *ngIf="f1.name.errors.required">Name is required</div>
+              </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="form-group col">
+              <label for="muscle">Muscle :</label>
+              <select class="custom-select" formControlName="muscle" required
+                [ngClass]="{ 'is-invalid': submitted && f1.muscle.errors }">
+                <option selected value="">Choose a muscle</option>
+                <option *ngFor="let m of muscles" [value]="m" >{{ m }}</option>
+              </select>
+              <div *ngIf="f1.muscle.errors" class="invalid-feedback">
+                  <div *ngIf="f1.muscle.errors.required">Muscle is required</div>
+              </div>
+          </div>
+        </div>
+      </article>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel >Select your exercices</ng-template>
+      <article class="exercices">
+        <app-exercice-list [muscle]="f1.muscle.value" [init]="false"
+            (selectExercicesEvent)="receiveSelectedExercices($event)">
+        </app-exercice-list>
+      </article>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Resume</ng-template>
+    <p>Training name : {{ f1.name.value }}</p>
+    <p>Muscle : {{ f1.muscle.value }}</p>
+    <p>Exercices :</p>
+    <ul>
+      <li *ngFor="let e of f2.exercices.value"> {{e.name}}</li>
+    </ul>
+    <div>
+      <button mat-button (click)="createTraining()">Create Training</button>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

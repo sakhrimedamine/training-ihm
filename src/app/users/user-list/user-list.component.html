@@ -1,0 +1,28 @@
+<section class="card">
+  <header>
+    <app-filters (filterClicked)='onFilterClicked($event)'>
+    </app-filters>
+  </header>
+  <article class='table-responsive'>
+    <table class='table' *ngIf='filtredUsers$ | async as users'>
+      <thead>
+        <tr>
+            <th>firstName</th>
+            <th>lastName</th>
+            <th>age</th>
+            <th>height</th>
+            <th>weight</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor='let user of users'>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.height }}</td>
+            <td>{{ user.weight }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </article>
+</section>
